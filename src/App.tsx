@@ -6,8 +6,7 @@ import './App.css'
 import SearchFilmLine from './SearchFilmLine/SearchFilmLine.tsx'
 import Cards from './Cards/Cards.tsx'
 import InputField from './InputField/InputField.tsx';
-import { useState, useRef, useContext  } from 'react'
-import { UserContext } from './context/name.context.tsx'
+import { useState, useRef  } from 'react'
 import { Routes, Route } from 'react-router'
 import Menu from './MenuR/Menu.tsx'
 import Login from './LoginR/Login.tsx'
@@ -15,6 +14,7 @@ import Movie from './MovieR/Movie.tsx'
 import Favorites from './FavoritesR/Favorites.tsx'
 import NotFound from './NotFound/NotFound.tsx'
 import { RequireAuth } from './helpers/RequireAuth.tsx'
+import { setCurrentUser } from './store/user.sclice.ts';   // ← action creator
 
 
 export type Profile = {name: string, isLogined: boolean}[];
@@ -25,7 +25,6 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const nameRef = useRef<HTMLInputElement>(null);
-  const { setCurrentUser } = useContext(UserContext);
 
 
   const handleLogin = () => {

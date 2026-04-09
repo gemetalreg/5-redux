@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { UserContext } from "../context/name.context";
+import { useAppSelector } from "../store/hooks";
 
 export function RequireAuth({ children }: { children: React.ReactNode }) {
-  const { currentUser } = useContext(UserContext);
+  const currentUser = useAppSelector(state => state.user.currentUser);
   const jwt = localStorage.getItem("jwt");
 
   if (!jwt && !currentUser) {

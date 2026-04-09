@@ -1,25 +1,24 @@
 import styles from "./Card.module.css";
 import type { CardProps } from "./Card.props";
-import { useDispatch } from 'react-redux';
-import { useContext } from 'react';
-import { UserContext } from '../context/name.context';
-import { useAppSelector } from '../store/hooks';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { addFavorite, removeFavorite } from '../store/favorite.slice';
 
 
 function Card({film}: CardProps) {
 
-  const dispatch = useDispatch();
-  const { currentUser } = useContext(UserContext)!;
+  const dispatch = useAppDispatch();
+  const currentUser = useAppSelector(state => state.user.currentUser);
 
-const rawUser = useContext(UserContext)?.currentUser;   // string | null
-const user = rawUser ?? '';                               // string
+  const user = currentUser ?? '';                               // string
 
-const ids = useAppSelector(s => s.favorites[user] ?? []);
-const isFav = ids.includes(film.id);
+  const ids = useAppSelector(s =>
+    currentUser ? s.favorites[currentUser] ?? [] : []
+  );
+  const isFav = ids.includes(film.id);
 
   // 2. Переключаем состояние
   const toggle = () => {
+    if (!currentUser) return; // guarded by RequireAuth, but TS wants a check
     if (isFav) {
       dispatch(removeFavorite({ user, filmId: film.id }));
     } else {

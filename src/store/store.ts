@@ -3,6 +3,8 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
 import { combineReducers } from '@reduxjs/toolkit';
 import favoritesReducer from './favorite.slice';
+import userReducer from "./user.sclice"
+
 import {filmsSlice} from "./films.slice"
 
 const persistConfig = {
@@ -12,6 +14,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  user: userReducer,
   favorites: favoritesReducer,
   films: filmsSlice.reducer
 });
@@ -25,3 +28,4 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
