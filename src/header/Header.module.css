@@ -1,0 +1,17 @@
+.header {
+    display: flex;
+    align-items: center;
+
+}
+.header-logo {
+    margin-right: auto;
+}
+
+.links {
+    display: flex;
+    gap: 16px;
+}
+
+.active {
+    color: orange;
+}
